@@ -257,92 +257,93 @@ EVENT onEDSMSync, EDSMSync, "", Condition AlwaysTrue
 EVENT onEGOSync, EGOSync, "", Condition AlwaysTrue
 
 //*************************************************************
-// SetUpLanguageEnglish
+// SetUpLanguageGerman
 //*************************************************************
-PROGRAM SetUpLanguageEnglish
+PROGRAM SetUpLanguageGerman
 
-Static say_UILights $= "%ifnonzero(EventClass_Lights,\"Lights on commander;Turning lights on\",\"Lights off commander;Turning lights off\")"
-Static say_UIFireGroup $= "Switching to fire group %substring(\"-ABCDEFGHIJK\",%(EventClass_Group),1);Fire Group %substring(\"-ABCDEFGHIJK\",%(EventClass_Group),1) selected"
-Static say_UIShieldsUp $= "%iftrue(EventClass_ShieldState,\"Shields Restored;Shields Up;Shields back on\",\"Alert, shields down commander;Warning no shields, take evasive manoeuvres\")"
-Static say_UILandingGear $= "%iftrue(EventClass_Gear,\"Landing gear down;Gear down;Gear down commander;Deploy Gear\",\"Landing gear up;Gear up commander;Retracted gear\")"
-Static say_UIHardpointsDeployed $= "%iftrue(EventClass_Deployed,\"Deploying weapons;Deploying hard points;Weapons out\",\"Weapons away;Retracting Weapons;Retracting hard points\")"
-Static say_UIInWing $= "%iftrue(EventClass_Winged,\"In wing commander\",\"Out of wing\")"
-Static say_UICargoScoopDeployed $= "%iftrue(EventClass_Scoop,\"Cargo scoop deployed;Deployed cargo scoop\",\"Cargo scoop retracted;Cargo scoop away\")"
-Static say_UISilentRunning $= "%iftrue(EventClass_SilentRunning,\"In silent running;Silent running engaged\",\"Heat vents enabled;Silent running disabled\")"
-Static say_UIScoopingFuel $= "%iftrue(EventClass_Scooping,\"Scooping fuel;Fuel scoop engaged\",\"Fuel scooping terminated;End fuel scooping\")"
-Static say_UISrvHandbrake $= "%iftrue(EventClass_Handbrake,\"Handbrake on;Handbrake engaged\",\"Handbrake off;Handbrake disengaged\")"
-Static say_UISrvTurret $= "%iftrue(EventClass_Turret,\"Switch to Turret\",\"Switch to Cab\")"
-Static say_UISrvUnderShip $= "%iftrue(EventClass_UnderShip,\"Under ship commander;Under ship, ready for retrieval\", \"Left ship\")"
-Static say_UIFsdMassLocked $= "%iftrue(EventClass_MassLocked,\"In Mass lock;Mass Lock;Mass Lock, FSD not available\",\"Out of Mass Lock;Left Mass Lock;Left Mass Lock, ready for Supercruise\")"
+Static say_UILights $= "%ifnonzero(EventClass_Lights,\"Licht an, Kommandant;Schalte Licht an\",\"Licht aus, Kommandant;Schalte Licht aus\")"
+Static say_UIFireGroup $= "Switching to fire group %substring(\"-ABCDEFGHIJK\",%(EventClass_Group),1);Feuergruppe %substring(\"-ABCDEFGHIJK\",%(EventClass_Group),1) ausgewählt"
+Static say_UIShieldsUp $= "%iftrue(EventClass_ShieldState,\"Schilde wiederhergestellt;Schilde hoch;Schilde wieder an\",\"Alarm, Schild ausgefallen, Kommandant;Warnung, keine Schilde, Ausweichmanöver machen\")"
+Static say_UILandingGear $= "%iftrue(EventClass_Gear,\"Fahrgestell runter;Fahrwerk runter;Fahrwerk ausfahren, Kommandant;Fahrwerk ausfahren\",\"Fahrgestell hoch;Fahrwerk hoch;Fahrwerk einfahren, Kommandant;Fahrwerk einfahren\")"
+Static say_UIHardpointsDeployed $= "%iftrue(EventClass_Deployed,\"Waffen ausfahren;Waffenaufhängungen ausfahren;Waffen raus\",\"Waffen weg;Waffen einfahren;Waffenaufhängungen einfahren\")"
+Static say_UIInWing $= "%iftrue(EventClass_Winged,\"Flügel betreten, Kommandant\",\"Flügel verlassen, Kommandant\")"
+Static say_UICargoScoopDeployed $= "%iftrue(EventClass_Scoop,\"Ladeschaufel bereitgestellt;Ladeschaufel ausgefahren\",\"Frachtschaufel eingefahren; Frachtschaufel weg\")"
+Static say_UISilentRunning $= "%iftrue(EventClass_SilentRunning,\"Schleichfahrt;Schleichfahrt eingeschaltet\",\"Lüftungsschlitze aktiviert;Schelichfahrt deaktiviert\")"
+Static say_UIScoopingFuel $= "%iftrue(EventClass_Scooping,\"Kraftstoff schöpfen; Kraftstoffschaufel aktiviert\",\"Kraftstoff schöpfen beendet;Beende Kraftstoff schöpfen\")"
+Static say_UISrvHandbrake $= "%iftrue(EventClass_Handbrake,\"Handbremse an; Handbremse angezogen\",\"Handbremse aus;Handbremse gelöst\")"
+Static say_UISrvTurret $= "%iftrue(EventClass_Turret,\"Wechsle zum Turm\",\"Wechsle zur Kabine\")"
+Static say_UISrvUnderShip $= "%iftrue(EventClass_UnderShip,\"Unter dem Schiff, Kommandant;Unter dem Schiff, bereit zum Zurückholen\", \"Schiff verlassen\")"
+Static say_UIFsdMassLocked $= "%iftrue(EventClass_MassLocked,\"In Massensperre; Massensperre; Massensperre, FSD nicht verfügbar\",\"Aus der Massenverriegelung;Massenverriegelung verlassen;Massenverriegelung verlassen, bereit für Supercruise\")"
 
 // can't yet do the fsd uncharge, that happens on entry to FSD .. need some code to tell it not to say it.. not sure of sequencing
-Static say_UIFsdCharging $= "%iftrue(EventClass_Charging,\"FSD Charging;Charging FSD;Main Engine Charging\")"
+Static say_UIFsdCharging $= "%iftrue(EventClass_Charging,\"FSD wird geladen;Aufladen des FSD;Aufladen des Haupttriebwerks\")"
 
-Static say_UIFsdCooldown $= "%iftrue(EventClass_CoolDown,\"\",\"FSD Cooldown complete;Cooldown Complete;FSD Ready\")"
-Static say_UILowFuel $= "%iftrue(EventClass_LowFuel,\"Warning, Low Fuel situation;Low Fuel Warning\",\"\")"
-Static say_UIOverHeating $= "%iftrue(EventClass_OverHeating,\"Warning, over heating;Over Heating commander\",\"Temperature normal;Temperature okay\")"
-Static say_UIBeingInterdicted $= "%iftrue(EventClass_Interdicted,\"Alert Interdiction under way;Warning, being inderdicted, evasive manoeuvres\",\"\")"
-Static say_UIBeingInterdicted $= "%iftrue(EventClass_Interdicted,\"Alert Interdiction under way;Warning, being inderdicted, evasive manoeuvres\",\"\")"
+Static say_UIFsdCooldown $= "%iftrue(EventClass_CoolDown,\"\",\"FSD-Abklingzeit beendet;Abklingzeit beendet;FSD bereit\")"
+Static say_UILowFuel $= "%iftrue(EventClass_LowFuel,\"Warnung, Kraftstoffmangel;Kraftstoffmangel Warnung \",\"\")"
+Static say_UIOverHeating $= "%iftrue(EventClass_OverHeating,\"Warnung, Überhitzung;Überhitzung, Kommandant\",\"Temperatur normal;Temperatur in Ordnung\")"
+Static say_UIBeingInterdicted $= "%iftrue(EventClass_Interdicted,\"Warnung, Verbotszone;Warnung, Verbotszone betreten, Ausweichmanöver!\",\"\")"
+// correct translation? double?? Static say_UIBeingInterdicted $= "%iftrue(EventClass_Interdicted,\"Alert Interdiction under way;Warning, being inderdicted, evasive manoeuvres\",\"\")"
 
-Static say_UIShipTargeted $= Lost Target;Target Lost
+Static say_UIShipTargeted $= Ziel weg; Ziel verloren
 
 // Too vocal EVENT UIIsInDanger, GenericResponseUI, "", Condition AlwaysTrue
 // Static say_UIIsInDanger $= '%iftrue(EventClass_Danger,"","Out of Danger commander;Situation normal, Danger has passed")'
 
-Static say_welcome $= Voice Pack Enabled
-Static say_install $= You have installed Elite Dangerous Discovery Voice Pack, English version
-Static say_shutdown $= Bye Bye Commander, till next time;Elite Dangerous Discovery closing;Fly safe commander; Farewell Commander;Safe voyages Commander;Toodle Pip Commander
-Static say_refresh $= "Welcome %existsdefault(RK_Class_Combat,\"\") Commander %(Commander), %ifcontains(LAST_ShipType,\"SRV\",\"driving\",\"flying\") a %ship(LAST_ShipType) with %hnum(LED_Credits,HNumList) credits"
+Static say_welcome $= Voice Pack aktiviert
+Static say_install $= Elite Dangerous Discovery Voice Pack, Deutsche Version, installiert
+Static say_shutdown $= Bye Bye Commander, bis zum nächsten Mal; Beende Elite Dangerous Discovery;Flieg sicher, Kommandant;Lebewohl, Kommandant;Sichere Reisen, Kommandant;Tüdelü, Kommandant
+// RK_Class_Combat needs to be translated
+Static say_refresh $= "Wilkommen %existsdefault(RK_Class_Combat,\"\") Kommandant %(Commander), %ifcontains(LAST_ShipType,\"SRV\",\"Sie sitzen in einem\",\"Sie fliegen eine\") %ship(LAST_ShipType) mit %hnum(LED_Credits,HNumList) Kredits"
 
-Static say_ApproachBody $= Approaching Body %body(EventClass_Body,EventStarSystem,say_ss);Body %body(EventClass_Body,EventStarSystem,say_ss) in range commander;Ship approaching Body %body(EventClass_Body,EventStarSystem,say_ss), Commander
-Static say_ApproachSettlement $= Approaching %replace(EventClass_Name,'+','');Settlement %replace(EventClass_Name,'+','') approaching
-Static say_AfmuRepairs $= Repaired module %(EventClass_ModuleLocalised) to %round(EventClass_Health,0,0) percent
-Static say_AppliedToSquadron $= Applied to Squadron %(EventClass_Name)
-Static say_AsteroidCracked $= Cracked Asteroid %(EventClass_Body) Commander;Boom!;%(EventClass_Body) cracked Commander
+Static say_ApproachBody $= Erreiche Objekt %body(EventClass_Body,EventStarSystem,say_ss);Objekt %body(EventClass_Body,EventStarSystem,say_ss) in Reichweite, Kommandant;Schiff erreicht Objekt %body(EventClass_Body,EventStarSystem,say_ss), Kommandant
+Static say_ApproachSettlement $= Erreichen %replace(EventClass_Name,'+','');Kolonisation %replace(EventClass_Name,'+','') wird erreicht
+Static say_AfmuRepairs $= Modul %(EventClass_ModuleLocalised) zu %round(EventClass_Health,0,0) Prozent repariert
+Static say_AppliedToSquadron $= Staffel %(EventClass_Name) beigetreten
+Static say_AsteroidCracked $= Asteroid %(EventClass_Body) geknackt, Kommandant;Bumm!;%(EventClass_Body) geknackt, Kommandant
 
-Static say_Bounty $= "Bounty for that ship is %hnum(EventClass_TotalReward,HNumList) credits, faction was %rs(\"%alt(EventClass_VictimFactionLocalised,EventClass_VictimFaction)\",say_ss)"
-Static say_BuyAmmo $= Ammunition bought, %(EventClass_Cost) credits;That cost %(EventClass_Cost) credits
-Static say_BuyExplorationData $= Bought map of star system %star(EventClass_System,say_ss) for %(EventClass_Cost) credits
-Static say_BuyDrones $= Bought %(EventClass_Count) %(EventClass_Type) at a total cost of %(EventClass_TotalCost) credits
-Static say_BuyTradeData $= Bought trade data for system %star(EventClass_System,say_ss), cost %(EventClass_Cost) credits
+Static say_Bounty $= "Das Kopfgeld für dieses Schiff beträgt %hnum(EventClass_TotalReward,HNumList) Kredits, Fraktion war %rs(\"%alt(EventClass_VictimFactionLocalised,EventClass_VictimFaction)\",say_ss)"
+Static say_BuyAmmo $= Munition gekauft, %(EventClass_Cost) Kredits;Das kostete %(EventClass_Cost) Kredits
+Static say_BuyExplorationData $= Karte des Sternensystems %star(EventClass_System,say_ss) gekauft für %(EventClass_Cost) Kredits
+Static say_BuyDrones $= Sie kauften %(EventClass_Count) %(EventClass_Type), zu einem Preis von %(EventClass_TotalCost) Kredits
+Static say_BuyTradeData $= Sie kauften Handelsdaten für das System %star(EventClass_System,say_ss), Kosten, %(EventClass_Cost) Kredits
 
-Static say_CargoDepot $= "%ifequal(EventClass_UpdateEnum,\"Collect\",\"{Collected %(EventClass_Count) of %(EventClass_FriendlyCargoType), leaving \")"
-Static say_CargoDepot $+= "%ifequal(EventClass_UpdateEnum,\"Deliver\",\"{Delivered %(EventClass_Count) of %(EventClass_FriendlyCargoType), leaving \")"
-Static say_CargoDepot $+= "%ifequal(EventClass_UpdateEnum,\"WingUpdate\",\"Wing update on cargo mission \")"
-Static say_CargoDepot $+= "%(EventClass_ItemsToGo) items left, %round(EventClass_ProgressPercent,1,\"0.#\") percent."
+Static say_CargoDepot $= "%ifequal(EventClass_UpdateEnum,\"Collect\",\"{Sie haben %(EventClass_FriendlyCargoType) eingesammelt, Anzahl, %(EventClass_Count), es bleiben \")"
+Static say_CargoDepot $+= "%ifequal(EventClass_UpdateEnum,\"Deliver\",\"{Sie haben %(EventClass_FriendlyCargoType) geliefert, Anzahl,  %(EventClass_Count), es bleiben \")"
+Static say_CargoDepot $+= "%ifequal(EventClass_UpdateEnum,\"WingUpdate\",\"Flügel Update für eine Frachtmission \")"
+Static say_CargoDepot $+= "%(EventClass_ItemsToGo) übrig, %round(EventClass_ProgressPercent,1,\"0.#\") Prozent."
 
-Static say_CapShipBond $= Reward for capital ship combat from faction %rs(EventClass_AwardingFaction,say_ss) against %rs(EventClass_VictimFaction,say_ss), %(EventClass_Reward) credits
-Static say_CockpitBreached $= Alert, Alert, Cockpit breached. Head for station now;Emergency, loss of Cockpit Canopy, abort;Emergency, Cockpit Canopy is breached
-Static say_CollectCargo $= "{Picked up;Collected;Scooped up} %(EventClass_FriendlyType) %iftrue(EventClass_Stolen,\", Warning commander, this cargo is stolen\")"
-Static say_CommitCrimeFine $= Fine committed commander, %sc(EventClass_CrimeType) on %rs(EventClass_Faction,say_ss), cost %(EventClass_Fine) credits
-Static say_CommitCrimeBounty $= Crime committed commander, %sc(EventClass_CrimeType) on %rs(EventClass_Faction,say_ss), bounty on you is %(EventClass_Bounty) credits
-Static say_CommunityGoal $= Current community goals are %(EventClass_CommunityGoalList)
-Static say_CommunityGoalJoin $= Joining the community goal %sc(EventClass_Name), located at system %star(EventClass_System,say_ss)
-Static say_CommunityGoalReward $= Community goal %sc(EventClass_Name), located at system %star(EventClass_System,say_ss), rewarded you with %hnum(EventClass_Reward,HNumList) credits
-Static say_CommunityGoalDiscard $= Opting out of community goal %sc(EventClass_Name), located at system %star(EventClass_System,say_ss)
-Static say_CrewAssign $= "Crew member %(EventClass_Name), %ifequal(EventClass_Role,\"Active\",\" reporting for duty\",\" placed on %(EventClass_Role)\")"
-Static say_CrewFire $= {Crew member %(EventClass_Name) }fired;dismissed;is paid off, goodbye sucker
-Static say_CrewHire $= "{Hired new crew member %(EventClass_Name)%ifnotempty(EventClass_Faction,\", of faction %rs(EventClass_Faction,say_ss)\"), rank %(EventClass_CombatRank), costing %(EventClass_Cost) credits.} Welcome to the team; Welcome onboard"
+Static say_CapShipBond $= Belohnung für den Kampf mit Großschiffen von der Fraktion %rs(EventClass_AwardingFaction,say_ss) gegen %rs(EventClass_VictimFaction,say_ss), %(EventClass_Reward) Kredits
+Static say_CockpitBreached $= Alarm, Alarm, Cockpit hat Risse. Fliegen sie schnellstmöglich zu einem Landeplatz;Notfall, Verlust des Cockpit Verdecks, Abbruch;Notfall, Cockpit Verdeck ist gebrochen
+Static say_CollectCargo $= "%(EventClass_FriendlyType) {aufgenommen;gesammelt;aufgeschöpft} %iftrue(EventClass_Stolen,\", Warnung, Kommandant, diese Ladung ist gestohlen\")"
+Static say_CommitCrimeFine $= 	Ordnungsstrafe verhangen, Kommandant, %sc(EventClass_CrimeType) bei %rs(EventClass_Faction,say_ss), Betrag %(EventClass_Fine) Kredits
+Static say_CommitCrimeBounty $= Verbrechen verübt, Kommandant, %sc(EventClass_CrimeType) bei %rs(EventClass_Faction,say_ss), Kopfgeld auf Sie ist %(EventClass_Bounty) Kredits
+Static say_CommunityGoal $= Aktuelle Gemeinschaftsziele sind %(EventClass_CommunityGoalList)
+Static say_CommunityGoalJoin $= Trete dem Gemeinschaftsziel %sc(EventClass_Name) bei, es befindet sich im %star(EventClass_System,say_ss) System
+Static say_CommunityGoalReward $= Gemeinschaftsziel %sc(EventClass_Name), aus dem %star(EventClass_System,say_ss) Systgem, belohnte dich mit %hnum(EventClass_Reward,HNumList) Kredits
+Static say_CommunityGoalDiscard $= Gemeinschaftsziel %sc(EventClass_Name) verlassen, es befand sich im %star(EventClass_System,say_ss) System
+Static say_CrewAssign $= "Mannschaftsmitglied %(EventClass_Name), %ifequal(EventClass_Role,\"Active\",\" meldet sich zum Dienst\",\" in der Rolle, %(EventClass_Role)\")"
+Static say_CrewFire $= {Mannschaftsmitglied %(EventClass_Name) }gefeuert;entlassen;wird ausbezahlt, auf Wiedersehen Trottel
+Static say_CrewHire $= "{Mannschaftsmitglied %(EventClass_Name) angeworben %ifnotempty(EventClass_Faction,\", Fraktion %rs(EventClass_Faction,say_ss)\"), Rang %(EventClass_CombatRank), Kosten, %(EventClass_Cost) Kredits.} Willkommen im Team;Willkommen an Bord"
 
-Static say_ChangeCrewRole $= Crew role changed to %(EventClass_Role);Swapped control to %(EventClass_Role)
-Static say_CrewMemberJoins $= Crew member %(EventClass_Crew) joins us on the %(EventShip_ShortName), Welcome Commander;Welcome Commander %(EventClass_Crew) to our ship
-Static say_CrewMemberQuits $= Crew member %(EventClass_Crew) quits;Commander %(EventClass_Crew) left
-Static say_CrewLaunchFighter $= %(EventClass_Crew) lauched Fighter;Fighter away, pilot %(EventClass_Crew)
-Static say_CrewMemberRoleChange $= %(EventClass_Crew) changed role to %(EventClass_Role)
-Static say_JoinACrew $= Joining commander %(EventClass_Captain) as crew member;Signing on for service with %(EventClass_Captain)
-Static say_QuitACrew $= Leaving commander %(EventClass_Captain) ship;Resigning my commission, commander %(EventClass_Captain)
-Static say_KickCrewMember $= Kicking %(EventClass_Crew);Removed crew %(EventClass_Crew);%(EventClass_Crew) is removed from the ship
+Static say_ChangeCrewRole $= Besatzungsrolle geändert in %(EventClass_Role);Steuerung auf %(EventClass_Role) getauscht
+Static say_CrewMemberJoins $= Mannschaftsmitglied %(EventClass_Crew) gesellt sich zu uns auf der %(EventShip_ShortName), Willkommen, Kommandant;Willkommen Kommandant %(EventClass_Crew) auf unserem Schiff
+Static say_CrewMemberQuits $= Mannschaftsmitglied %(EventClass_Crew) zieht die Reißleine;Kommandant %(EventClass_Crew) verlässt uns
+Static say_CrewLaunchFighter $= %(EventClass_Crew) startete Jäger;Jäger los, Pilot %(EventClass_Crew)
+Static say_CrewMemberRoleChange $= %(EventClass_Crew) änderte die Rolle zu %(EventClass_Role)
+Static say_JoinACrew $= Verstärkt Kommander %(EventClass_Captain) als Mannschaftsmitglied;Tritt mit Kommandant %(EventClass_Captain) zum Dienst an
+Static say_QuitACrew $= Schiff von Kommandant %(EventClass_Captain) wird verlassen;Rücktritt von meinem Auftrag, Kommandant %(EventClass_Captain)
+Static say_KickCrewMember $= Entlasse %(EventClass_Crew);Kommandant %(EventClass_Crew) abgezogen;%(EventClass_Crew) wird vom Schiff entfernt	
 
-Static say_ClearSavedGame $= Wow thats a lot of credits thrown away, game save cleared!;Game wiped.
-Static say_CodexEntry $= Codex entry %(EventClass_Name_Localised) created
+Static say_ClearSavedGame $= Donnerkeil! Das sind eine Menge weggeworferner Kredits, Spielstand gelöscht!;Spiel gelöscht.
+Static say_CodexEntry $= Kodexeintrag %(EventClass_Name_Localised) erzeugt
 
-Static say_DatalinkVoucher $= {Scanned datalink;Downloaded datalink}{, voucher received is worth;, that's worth} %(EventClass_Reward) credits from %rs(EventClass_PayeeFaction,say_ss)
-Static say_DatalinkScan $= Scanned data link, %(EventClass_MessageLocalised)
-Static say_DataScanned $= Scanned %sc(EventClass_Type)
-Static say_DiscoveryScan $= "{Scanned System, %(EventClass_Bodies);System Scan reveals %(EventClass_Bodies)}{ %ifeq(EventClass_Bodies,1,\"body\",\"bodies\") }{found;detected}{ commander;}"
-Static say_Died $= Here lies the bones of commander %(Commander), dead and buried; Your dead and buried commander %(Commander);I'll send for the under taker commander %(Commander);Ashes to ashes, dust to dust, your toast Commander %(Commander)
-Static say_Docked $= "{Docked at %(EventClass_StationName), %ifnotempty(EventClass_StationType,\"%(EventClass_StationType) type\")}{. }{This is a %(EventClass_Economy_Localised) station;Station economy is %(EventClass_Economy_Localised)}"
-Static say_DockSRV $= Surface Recon Vehicle back on board Commander;Boarded mothership Commander, prepare for flight operations;Entering mothership
+Static say_DatalinkVoucher $= {Gescannte Datenverbindung; Heruntergeladene Datenverbindung}{, der erhaltene Gutschein ist;, der Wert ist} %(EventClass_Reward) Kredits wert, erhalten von %rs(EventClass_PayeeFaction,say_ss)
+Static say_DatalinkScan $= Gescannte Datenverbindung, %(EventClass_MessageLocalised)
+Static say_DataScanned $= %sc(EventClass_Type) gescannt
+Static say_DiscoveryScan $= "{Gescanntes System, %(EventClass_Bodies);Systemscan zeigt %(EventClass_Bodies)}{ %ifeq(EventClass_Bodies,1,\"Objekt\",\"Objekte\") }{gefunden;erkannt}{ Kommandant;}"
+Static say_Died $= Hier liegen die Gebeine von Kommandant %(Commander), tot und begraben; Sie sind tot und begraben, Kommandant %(Commander);Ich sende Ihnen den Bestatter, Kommandant %(Commander);Asche zu Asche, Staub zu Staub, zum Wohl Kommandant %(Commander)
+Static say_Docked $= "{Angedockt an %(EventClass_StationName), %ifnotempty(EventClass_StationType,\"%(EventClass_StationType) type\")}{. }{Dies ist eine %(EventClass_Economy_Localised) basierte Station;Hafenökonomie ist %(EventClass_Economy_Localised)}"
+Static say_DockSRV $= Oberflächenerkundungsfahrzeug ist zurück an Bord;An Bord des Mutterschiffs, Kommander, Flugbetrieb vorbereiten;Mutterschiff betreten
 Static say_DockingDenied $= {Appears busy commander;Nope, no good commander;Busy Port commander}, confirming %(EventClass_StationName) has denied docking;Docking was denied at %(EventClass_StationName)
 Static say_DockingGranted $= Commander, confirmed for landing pad %(EventClass_LandingPad);Confirmed landing on pad %(EventClass_LandingPad); Landing pad %(EventClass_LandingPad) is ready for you commander
 Static say_DockingRequested $= Sent docking request;Requested docking
@@ -783,8 +784,8 @@ If SpeechControls NotPresent Or SpeechControls NotContains SSMLDisable;
 
 Static HNumList = Minus;Trillion;Billion;Million;Thousand;Hundred
 
-Global SpeechDefinitionFile = SetUpLanguageEnglish
-Static SpeechCulture = en-gb
+Global SpeechDefinitionFile = SetUpLanguageGerman
+Static SpeechCulture = de-de
 
 If SpeechControls NotPresent
     Print ****
@@ -851,7 +852,7 @@ END PROGRAM
 PROGRAM SetUpLanguage
 
 Rem do these.. If %(CurrentCulture) Contains sv
-Call SetUpLanguageEnglish
+Call SetUpLanguageGerman
 
 END PROGRAM
 
